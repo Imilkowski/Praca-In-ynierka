@@ -3,10 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+[System.Serializable]
+public class Voxel
+{
+    public Vector3 pos;
+
+    public Voxel(Vector3 pos)
+    {
+        this.pos = pos;
+    }
+}
+
 public class RayVoxelizer : MonoBehaviour
 {
     public MeshCollider meshCollider;
-    [Range(0.1f, 1f)] public float resolution;
+    [Range(0.05f, 1f)] public float resolution;
 
     public VoxelModel destinationVoxelData;
 
@@ -15,7 +26,7 @@ public class RayVoxelizer : MonoBehaviour
     public bool showBoundingBox;
     public bool showVoxelGrid;
 
-    private bool[,,] voxelData;
+    private List<Voxel> voxelData;
 
     void OnDrawGizmos()
     {
@@ -31,7 +42,7 @@ public class RayVoxelizer : MonoBehaviour
             Handles.DrawWireCube(bounds.center, boundingBoxSize);
         }
 
-        if (showVoxelGrid)
+        if (showVoxelGrid && resolution > 0.25f)
         {
             boundingBoxSize /= resolution;
 
@@ -50,13 +61,17 @@ public class RayVoxelizer : MonoBehaviour
 
     public void GenerateVoxelData()
     {
+        StartCoroutine(GenerateData());
+    }
+
+    public IEnumerator GenerateData()
+    {
+        voxelData = new List<Voxel>();
+
         Bounds bounds = meshCollider.bounds;
 
         Vector3 boundingBoxSize = bounds.extents * 2;
         Vector3 boundingBoxPivot = bounds.center - (boundingBoxSize / 2);
-
-        Vector3Int voxelDataSize = new Vector3Int((int)Mathf.Ceil(boundingBoxSize.x / resolution), (int)Mathf.Ceil(boundingBoxSize.y / resolution), (int)Mathf.Ceil(boundingBoxSize.z / resolution));
-        voxelData = new bool[voxelDataSize.x, voxelDataSize.y, voxelDataSize.z];
 
         boundingBoxSize /= resolution;
 
@@ -67,20 +82,20 @@ public class RayVoxelizer : MonoBehaviour
                 for (int x = 0; x < boundingBoxSize.x; x++)
                 {
                     Vector3 pointPos = boundingBoxPivot + (new Vector3(x, y, z) * resolution) + (Vector3.one * resolution / 2);
-                    voxelData[x, y, z] = CheckPoint(pointPos);
+                    if (CheckPoint(pointPos))
+                        voxelData.Add(new Voxel(pointPos));
                 }
             }
+
+            Debug.Log("Generating in progress " + Mathf.Round(((z + 1) / boundingBoxSize.z) * 100) + "%");
+            yield return new WaitForEndOfFrame();
         }
 
-        destinationVoxelData.voxelData = (bool[,,])voxelData.Clone();
-        destinationVoxelData.voxelDataSize = voxelDataSize;
+        destinationVoxelData.voxelData = voxelData;
+        //destinationVoxelData.voxelModelSize = voxelDataSize;
+        destinationVoxelData.resolution = resolution;
 
-        //for (int j = 0; j < 10; j++)
-        //{
-        //    Debug.Log(destinationVoxelData.voxelData[Random.Range(0, destinationVoxelData.voxelDataSize.x), Random.Range(0, destinationVoxelData.voxelDataSize.y), Random.Range(0, destinationVoxelData.voxelDataSize.z)]);
-        //}
-
-        Debug.Log("Voxel Data Generated");
+        Debug.Log("Voxel Data Generated: " + voxelData.Count + " voxels");
     }
 
     private bool CheckPoint(Vector3 pointPos)

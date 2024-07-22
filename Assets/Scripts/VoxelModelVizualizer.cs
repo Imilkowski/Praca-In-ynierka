@@ -29,52 +29,32 @@ public class VoxelModelVizualizer : MonoBehaviour
 
     private void CreateVizualization()
     {
-        //for (int j = 0; j < 10; j++)
-        //{
-        //    Debug.Log(voxelModel.voxelData[Random.Range(0, voxelModel.voxelData.GetLength(0)), Random.Range(0, voxelModel.voxelData.GetLength(1)), Random.Range(0, voxelModel.voxelData.GetLength(2))]);
-        //}
-
-        instancedPopulation = 0;
-        for (int z = 0; z < voxelModel.voxelData.GetLength(2); z++)
-        {
-            for (int y = 0; y < voxelModel.voxelData.GetLength(1); y++)
-            {
-                for (int x = 0; x < voxelModel.voxelData.GetLength(0); x++)
-                {
-                    if (voxelModel.voxelData[x, y, z])
-                        instancedPopulation += 1;
-                }
-            }
-        }
+        instancedPopulation = voxelModel.voxelData.Count;
 
         matrices = new Matrix4x4[instancedPopulation];
 
         int i = 0;
-        for (int z = 0; z < voxelModel.voxelData.GetLength(2); z++)
+        foreach (Voxel voxel in voxelModel.voxelData)
         {
-            for (int y = 0; y < voxelModel.voxelData.GetLength(1); y++)
-            {
-                for (int x = 0; x < voxelModel.voxelData.GetLength(0); x++)
-                {
-                    if (voxelModel.voxelData[x, y, z])
-                    {
-                        Vector3 position = new Vector3(x, y, z) / 10;
-                        Quaternion rotation = Quaternion.identity;
-                        Vector3 scale = Vector3.one / 11;
+            Vector3 position = voxel.pos;
+            Quaternion rotation = Quaternion.identity;
+            Vector3 scale = Vector3.one * voxelModel.resolution * 0.9f;
 
-                        Matrix4x4 mat = Matrix4x4.TRS(position + transform.position, rotation, scale);
+            Matrix4x4 mat = Matrix4x4.TRS(position + transform.position, rotation, scale);
 
-                        matrices[i] = mat;
+            matrices[i] = mat;
 
-                        i++;
-                    }
-                }
-            }
+            i++;
         }
 
+        Invoke("StartVisualization", 0.1f);
+    }
+
+    private void StartVisualization()
+    {
         visualized = true;
 
-        Debug.Log("Vizualizing");
+        Debug.Log("Visualizing");
     }
 
     void Update()

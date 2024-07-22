@@ -52,35 +52,35 @@ public class Voxelizer : MonoBehaviour
 
     public void GenerateVoxelData()
     {
-        Bounds bounds = meshCollider.bounds;
+        //Bounds bounds = meshCollider.bounds;
 
-        Vector3 boundingBoxSize = bounds.extents * 2;
-        Vector3 boundingBoxPivot = bounds.center - (boundingBoxSize / 2);
+        //Vector3 boundingBoxSize = bounds.extents * 2;
+        //Vector3 boundingBoxPivot = bounds.center - (boundingBoxSize / 2);
 
-        Vector3Int voxelDataSize = new Vector3Int((int)(boundingBoxSize.x / resolution), (int)(boundingBoxSize.y / resolution), (int)(boundingBoxSize.z / resolution));
+        //Vector3Int voxelDataSize = new Vector3Int((int)(boundingBoxSize.x / resolution), (int)(boundingBoxSize.y / resolution), (int)(boundingBoxSize.z / resolution));
 
-        voxelData = new bool[voxelDataSize.x, voxelDataSize.y, voxelDataSize.z];
+        //voxelData = new bool[voxelDataSize.x, voxelDataSize.y, voxelDataSize.z];
 
-        for (int z = 0; z < voxelDataSize.z; z++)
-        {
-            for (int y = 0; y < voxelDataSize.y; y++)
-            {
-                for (int x = 0; x < voxelDataSize.x; x++)
-                {
-                    bool meshHit = Physics.BoxCast(boundingBoxPivot + new Vector3(x, y, z) + (Vector3.one * resolution / 2), Vector3.one * resolution / 2, Vector3.forward);
-                    voxelData[x, y, z] = meshHit;
-                }
-            }
-        }
-
-        destinationVoxelData.voxelData = (bool[,,])voxelData.Clone();
-        destinationVoxelData.voxelDataSize = voxelDataSize;
-
-        //for (int j = 0; j < 10; j++)
+        //for (int z = 0; z < voxelDataSize.z; z++)
         //{
-        //    Debug.Log(destinationVoxelData.voxelData[Random.Range(0, destinationVoxelData.voxelDataSize.x), Random.Range(0, destinationVoxelData.voxelDataSize.y), Random.Range(0, destinationVoxelData.voxelDataSize.z)]);
+        //    for (int y = 0; y < voxelDataSize.y; y++)
+        //    {
+        //        for (int x = 0; x < voxelDataSize.x; x++)
+        //        {
+        //            bool meshHit = Physics.BoxCast(boundingBoxPivot + new Vector3(x, y, z) + (Vector3.one * resolution / 2), Vector3.one * resolution / 2, Vector3.forward);
+        //            voxelData[x, y, z] = meshHit;
+        //        }
+        //    }
         //}
 
-        Debug.Log("Voxel Data Generated");
+        //destinationVoxelData.voxelData = (bool[,,])voxelData.Clone();
+        //destinationVoxelData.voxelDataSize = voxelDataSize;
+
+        ////for (int j = 0; j < 10; j++)
+        ////{
+        ////    Debug.Log(destinationVoxelData.voxelData[Random.Range(0, destinationVoxelData.voxelDataSize.x), Random.Range(0, destinationVoxelData.voxelDataSize.y), Random.Range(0, destinationVoxelData.voxelDataSize.z)]);
+        ////}
+
+        //Debug.Log("Voxel Data Generated");
     }
 }

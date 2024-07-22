@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "ScriptableObjects/VoxelModel")]
 public class VoxelModel : ScriptableObject
 {
-    public bool[,,] voxelData;
-    public Vector3Int voxelDataSize;
+    public List<Voxel> voxelData;
+    public Vector3Int voxelModelSize;
+    public float resolution;
 }

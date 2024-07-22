@@ -17,7 +17,7 @@ public class Voxel
 public class RayVoxelizer : MonoBehaviour
 {
     public MeshCollider meshCollider;
-    [Range(0.05f, 1f)] public float resolution;
+    [Range(0.025f, 1f)] public float resolution;
 
     public VoxelModel destinationVoxelData;
 
@@ -42,9 +42,14 @@ public class RayVoxelizer : MonoBehaviour
             Handles.DrawWireCube(bounds.center, boundingBoxSize);
         }
 
-        if (showVoxelGrid && resolution > 0.25f)
+        if (showVoxelGrid)
         {
             boundingBoxSize /= resolution;
+
+            int voxels = (int)Mathf.Ceil(boundingBoxSize.x * boundingBoxSize.y * boundingBoxSize.z);
+
+            if (voxels > 10000)
+                return;
 
             for (int z = 0; z < boundingBoxSize.z; z++)
             {

@@ -87,8 +87,9 @@ public class RayVoxelizer : MonoBehaviour
                 for (int x = 0; x < boundingBoxSize.x; x++)
                 {
                     Vector3 pointPos = boundingBoxPivot + (new Vector3(x, y, z) * resolution) + (Vector3.one * resolution / 2);
+                    Vector3Int pointIndex = new Vector3Int(x, y, z);
                     if (CheckPoint(pointPos))
-                        voxelData.Add(new Voxel(pointPos));
+                        voxelData.Add(new Voxel(pointIndex));
                 }
             }
 
@@ -97,7 +98,7 @@ public class RayVoxelizer : MonoBehaviour
         }
 
         destinationVoxelData.voxelData = voxelData;
-        //destinationVoxelData.voxelModelSize = voxelDataSize;
+        destinationVoxelData.voxelModelSize = new Vector3Int((int)Mathf.Ceil(boundingBoxSize.x), (int)Mathf.Ceil(boundingBoxSize.y), (int)Mathf.Ceil(boundingBoxSize.z));
         destinationVoxelData.resolution = resolution;
 
         Debug.Log("Voxel Data Generated: " + voxelData.Count + " voxels");

@@ -16,6 +16,11 @@ public class VoxelModelVizualizer : MonoBehaviour
 
     private bool visualized;
 
+    void Start()
+    {
+        VisualizeVoxelModel();
+    }
+
     public void VisualizeVoxelModel()
     {
         ClearVisualization();
@@ -36,7 +41,7 @@ public class VoxelModelVizualizer : MonoBehaviour
         int i = 0;
         foreach (Voxel voxel in voxelModel.voxelData)
         {
-            Vector3 position = voxel.pos;
+            Vector3 position = voxel.pos * voxelModel.resolution;
             Quaternion rotation = Quaternion.identity;
             Vector3 scale = Vector3.one * voxelModel.resolution * 0.9f;
 

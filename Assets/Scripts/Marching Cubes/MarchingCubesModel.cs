@@ -7,6 +7,8 @@ public class MarchingCubesModel : MonoBehaviour
 {
     public VoxelModel voxelModel;
 
+    public bool showVoxelPoints;
+
     private MeshFilter _meshFilter;
 
     private List<Vector3> vertices = new List<Vector3>();
@@ -28,6 +30,7 @@ public class MarchingCubesModel : MonoBehaviour
     private void SetMesh()
     {
         Mesh mesh = new Mesh();
+        mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
 
         mesh.vertices = vertices.ToArray();
         mesh.triangles = triangles.ToArray();
@@ -52,10 +55,10 @@ public class MarchingCubesModel : MonoBehaviour
                     for (int i = 0; i < 8; i++)
                     {
                         Vector3Int corner = new Vector3Int(x, y, z) + MarchingTable.Corners[i];
-                        cubeCorners[i] = voxelDataArray[corner.x, corner.y, corner.z];
-
-                        MarchCube(new Vector3Int(x, y, z), GetConfigurationIndex(cubeCorners));
+                        cubeCorners[i] = !voxelDataArray[corner.x, corner.y, corner.z]; //why does it need to be inverted?
                     }
+
+                    MarchCube(new Vector3Int(x, y, z), GetConfigurationIndex(cubeCorners));
                 }
             }
         }
@@ -104,11 +107,40 @@ public class MarchingCubesModel : MonoBehaviour
 
     private void ConvertVoxelDataToArray()
     {
-        voxelDataArray = new bool[voxelModel.voxelModelSize.x, voxelModel.voxelModelSize.y, voxelModel.voxelModelSize.z]; //TODO: is a new initialized array of bools filled with falses?
+        voxelDataArray = new bool[voxelModel.voxelModelSize.x, voxelModel.voxelModelSize.y, voxelModel.voxelModelSize.z];
 
         foreach (Voxel voxel in voxelModel.voxelData)
         {
             voxelDataArray[(int)voxel.pos.x, (int)voxel.pos.y, (int)voxel.pos.z] = true;
+        }
+    }
+
+    void OnDrawGizmos()
+    {
+        if (!showVoxelPoints)
+            return;
+
+        if (voxelDataArray == null)
+            return; 
+
+        for (int x = 0; x < voxelModel.voxelModelSize.x; x++)
+        {
+            for (int y = 0; y < voxelModel.voxelModelSize.y; y++)
+            {
+                for (int z = 0; z < voxelModel.voxelModelSize.z; z++)
+                {
+                    if(voxelDataArray[x, y, z])
+                    {
+                        Gizmos.color = Color.green;
+                        Gizmos.DrawSphere(transform.position + (new Vector3(x, y, z) * voxelModel.resolution), 0.01f);
+                    }
+                    else
+                    {
+                        Gizmos.color = Color.red;
+                        Gizmos.DrawSphere(transform.position + (new Vector3(x, y, z) * voxelModel.resolution), 0.01f);
+                    }
+                }
+            }
         }
     }
 }

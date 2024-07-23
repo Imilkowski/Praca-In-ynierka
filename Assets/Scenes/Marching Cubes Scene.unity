@@ -421,7 +421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc87626713292e24cb4f6244f075ae16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  voxelModel: {fileID: 11400000, guid: 45a3f9b021fd5bd47aa487c6c926c215, type: 2}
+  voxelModel: {fileID: 11400000, guid: b3d35b710ad929242943901c050fd1a0, type: 2}
   material: {fileID: 2100000, guid: 7f52abe4da0d35e4d9de45b3eb95f7fa, type: 2}
   mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &832575517
@@ -519,7 +519,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07a98465c8ae8c94ca14563fae9c5897, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  voxelModel: {fileID: 11400000, guid: 45a3f9b021fd5bd47aa487c6c926c215, type: 2}
+  voxelModel: {fileID: 11400000, guid: b3d35b710ad929242943901c050fd1a0, type: 2}
 --- !u!23 &1415521817
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -653,7 +653,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132147574871478}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -2222346464153789849, guid: 2586fc21ef143f44e980c5a920315d07, type: 3}
 --- !u!64 &3469287838030807210
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -675,7 +675,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -2222346464153789849, guid: 2586fc21ef143f44e980c5a920315d07, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

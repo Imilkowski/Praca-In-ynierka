@@ -75,7 +75,7 @@ public class RayVoxelizer : MonoBehaviour
 
         Bounds bounds = meshCollider.bounds;
 
-        Vector3 boundingBoxSize = bounds.extents * 2;
+        Vector3 boundingBoxSize = bounds.extents * 2.5f;
         Vector3 boundingBoxPivot = bounds.center - (boundingBoxSize / 2);
 
         boundingBoxSize /= resolution;
@@ -98,7 +98,7 @@ public class RayVoxelizer : MonoBehaviour
         }
 
         destinationVoxelData.voxelData = voxelData;
-        destinationVoxelData.voxelModelSize = new Vector3Int((int)Mathf.Ceil(boundingBoxSize.x), (int)Mathf.Ceil(boundingBoxSize.y), (int)Mathf.Ceil(boundingBoxSize.z));
+        destinationVoxelData.voxelModelSize = new Vector3Int((int)Mathf.Ceil(boundingBoxSize.x) + 1, (int)Mathf.Ceil(boundingBoxSize.y) + 1, (int)Mathf.Ceil(boundingBoxSize.z) + 1);
         destinationVoxelData.resolution = resolution;
 
         Debug.Log("Voxel Data Generated: " + voxelData.Count + " voxels");

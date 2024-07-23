@@ -32,7 +32,7 @@ public class RayVoxelizer : MonoBehaviour
     {
         Bounds bounds = meshCollider.bounds;
 
-        Vector3 boundingBoxSize = bounds.extents * 2;
+        Vector3 boundingBoxSize = bounds.extents * 2.5f;
         Vector3 boundingBoxPivot = bounds.center - (boundingBoxSize / 2);
 
         if (showBoundingBox)

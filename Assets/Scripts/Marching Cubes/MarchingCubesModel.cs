@@ -5,25 +5,33 @@ using UnityEngine;
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class MarchingCubesModel : MonoBehaviour
 {
+    [Header("Properties")]
+
     public VoxelModel voxelModel;
+    public MeshCollider meshCollider;
 
     public bool showVoxelPoints;
 
-    private MeshFilter _meshFilter;
+    [HideInInspector] public MeshFilter meshFilter;
 
     private List<Vector3> vertices = new List<Vector3>();
     private List<int> triangles = new List<int>();
 
-    private bool[,,] voxelDataArray;
+    [HideInInspector] public bool[,,] voxelDataArray;
 
-    void Start()
+    void Awake()
     {
-        _meshFilter = GetComponent<MeshFilter>();
+        meshFilter = GetComponent<MeshFilter>();
+        meshCollider = GetComponent<MeshCollider>();
 
         ConvertVoxelDataToArray();
 
+        CalculateModel();
+    }
+
+    public void CalculateModel()
+    {
         MarchCubes();
-        
         SetMesh();
     }
 
@@ -36,7 +44,8 @@ public class MarchingCubesModel : MonoBehaviour
         mesh.triangles = triangles.ToArray();
         mesh.RecalculateNormals();
 
-        _meshFilter.mesh = mesh;
+        meshFilter.mesh = mesh;
+        meshCollider.sharedMesh = mesh;
     }
 
     private void MarchCubes()

@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class DestructionModel : MarchingCubesModel
 {
+    [Header("Properties")]
+
     public int collisionRadius;
 
-    void OnCollisionEnter(Collision collision)
+    public void ImpactReceived(Collision collision, Vector3Int partPos)
     {
-        Destruct(collision.contacts[0].point - transform.position + (collision.contacts[0].normal * voxelModel.resolution * 0.5f));
+        Destruct(collision.contacts[0].point - transform.position + (collision.contacts[0].normal * voxelModel.resolution * 0.5f), partPos);
     }
 
-    private void Destruct(Vector3 collisionPoint)
+    private void Destruct(Vector3 collisionPoint, Vector3Int partPos)
     {
         collisionPoint = collisionPoint / voxelModel.resolution;
         Vector3Int voxelCollisionPoint = new Vector3Int((int)Mathf.Round(collisionPoint.x), (int)Mathf.Round(collisionPoint.y), (int)Mathf.Round(collisionPoint.z));
@@ -29,7 +31,7 @@ public class DestructionModel : MarchingCubesModel
             }
         }
 
-        CalculateModel();
+        CalculateModel(GetIdPyPos(partPos));
     }
 
     private List<Vector3Int> VoxelsInSphere() //TODO: save this info in projectiles

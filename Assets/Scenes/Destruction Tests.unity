@@ -513,7 +513,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 7f52abe4da0d35e4d9de45b3eb95f7fa, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -542,7 +542,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132147574871478}
-  m_Mesh: {fileID: -2432090755550338912, guid: c789f9a4d664abe44ace71beff8fe11b, type: 3}
+  m_Mesh: {fileID: -2222346464153789849, guid: 2586fc21ef143f44e980c5a920315d07, type: 3}
 --- !u!64 &3469287838030807210
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -564,7 +564,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: -2432090755550338912, guid: c789f9a4d664abe44ace71beff8fe11b, type: 3}
+  m_Mesh: {fileID: -2222346464153789849, guid: 2586fc21ef143f44e980c5a920315d07, type: 3}
 --- !u!1001 &8048233309371729655
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -577,6 +577,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Destruction Model
+      objectReference: {fileID: 0}
+    - target: {fileID: 2600325836549047565, guid: 57915d565ce647b42a59db3d50706abe,
+        type: 3}
+      propertyPath: voxelModel
+      value: 
+      objectReference: {fileID: 11400000, guid: b3d35b710ad929242943901c050fd1a0,
+        type: 2}
+    - target: {fileID: 2600325836549047565, guid: 57915d565ce647b42a59db3d50706abe,
+        type: 3}
+      propertyPath: collisionRadius
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3814692435249339608, guid: 57915d565ce647b42a59db3d50706abe,
         type: 3}

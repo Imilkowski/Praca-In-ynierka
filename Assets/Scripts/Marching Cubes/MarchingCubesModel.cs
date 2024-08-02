@@ -22,7 +22,8 @@ public class MarchingCubesModel : MonoBehaviour
 
     [HideInInspector] public bool[,,] voxelDataArray;
     [HideInInspector] public List<Vector3Int> partsPos;
-    private List<GameObject> modelParts;
+    [HideInInspector] public List<GameObject> modelParts;
+    [HideInInspector] public Vector3Int partSize;
 
     void Awake()
     {
@@ -43,7 +44,17 @@ public class MarchingCubesModel : MonoBehaviour
                 return i;
         }
 
-        return 0;
+        return -1;
+    }
+
+    private Vector3Int[] GetPartBounds(Vector3Int partPos)
+    {
+        Vector3Int[] partBounds = new Vector3Int[2];
+
+        partBounds[0] = partPos * partSize;
+        partBounds[1] = (partPos + Vector3Int.one) * partSize;
+
+        return partBounds;
     }
 
     private void InitializeModel()
@@ -51,6 +62,11 @@ public class MarchingCubesModel : MonoBehaviour
         divisionFactor.x = Mathf.CeilToInt(voxelModel.voxelModelSize.x / (float)voxelsInPart);
         divisionFactor.y = Mathf.CeilToInt(voxelModel.voxelModelSize.y / (float)voxelsInPart);
         divisionFactor.z = Mathf.CeilToInt(voxelModel.voxelModelSize.z / (float)voxelsInPart);
+
+        int xSize = voxelModel.voxelModelSize.x / divisionFactor.x;
+        int ySize = voxelModel.voxelModelSize.y / divisionFactor.y;
+        int zSize = voxelModel.voxelModelSize.z / divisionFactor.z;
+        partSize = new Vector3Int(xSize, ySize, zSize);
 
         partsPos = new List<Vector3Int>();
         for (int x = 0; x < divisionFactor.x; x++)
@@ -65,6 +81,7 @@ public class MarchingCubesModel : MonoBehaviour
         }
 
         modelParts = new List<GameObject>();
+        int i = 0;
         foreach (Vector3Int part in partsPos)
         {
             GameObject spawnedPart = new GameObject("Part " + part.ToString());
@@ -76,14 +93,25 @@ public class MarchingCubesModel : MonoBehaviour
             spawnedPart.AddComponent<MeshRenderer>().material = modelMaterial;
 
             if (GetType() == typeof(DestructionModel))
-                spawnedPart.AddComponent<DestructionPart>().partPos = part;
+            {
+                DestructionPart destructionPart = spawnedPart.AddComponent<DestructionPart>();
+
+                destructionPart.partPos = part;
+                destructionPart.partId = i;
+                destructionPart.partBounds = GetPartBounds(part);
+            }
 
             modelParts.Add(spawnedPart);
+
+            i++;
         }
     }
 
     public void CalculateModel(int partId)
     {
+        if (partId == -1)
+            return;
+
         MarchCubes(partId);
         SetMesh(partId);
     }
@@ -110,15 +138,11 @@ public class MarchingCubesModel : MonoBehaviour
         vertices.Clear();
         triangles.Clear();
 
-        int xSize = voxelModel.voxelModelSize.x / divisionFactor.x;
-        int ySize = voxelModel.voxelModelSize.y / divisionFactor.y;
-        int zSize = voxelModel.voxelModelSize.z / divisionFactor.z;
-
-        for (int x = xSize * partPos.x; x < xSize * (partPos.x + 1); x++)
+        for (int x = partSize.x * partPos.x; x < partSize.x * (partPos.x + 1); x++)
         {
-            for (int y = ySize * partPos.y; y < ySize * (partPos.y + 1); y++)
+            for (int y = partSize.y * partPos.y; y < partSize.y * (partPos.y + 1); y++)
             {
-                for (int z = zSize * partPos.z; z < zSize * (partPos.z + 1); z++)
+                for (int z = partSize.z * partPos.z; z < partSize.z * (partPos.z + 1); z++)
                 {
                     try
                     {

@@ -37,14 +37,21 @@ public class DestructionModel : MarchingCubesModel
         modificationBounds[0] = voxelCollisionPoint - (Vector3Int.one * collisionRadius);
         modificationBounds[1] = voxelCollisionPoint + (Vector3Int.one * collisionRadius);
 
-        Debug.Log(voxelCollisionPoint);
-        Debug.Log(modificationBounds[0]);
-        Debug.Log(modificationBounds[1]);
-        Debug.Log("-----------------");
+        //foreach (int partId in GetPartIdsByBoundingBox(modificationBounds))
+        //{
+        //    CalculateModel(partId);
+        //}
 
-        foreach (int partId in GetPartIdsByBoundingBox(modificationBounds))
+        StartCoroutine(CalculateModelParts(GetPartIdsByBoundingBox(modificationBounds)));
+    }
+
+    private IEnumerator CalculateModelParts(List<int> partIds)
+    {
+        foreach (int partId in partIds)
         {
             CalculateModel(partId);
+
+            yield return new WaitForEndOfFrame();
         }
     }
 

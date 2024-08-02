@@ -587,7 +587,7 @@ PrefabInstance:
     - target: {fileID: 2600325836549047565, guid: 57915d565ce647b42a59db3d50706abe,
         type: 3}
       propertyPath: collisionRadius
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3814692435249339608, guid: 57915d565ce647b42a59db3d50706abe,
         type: 3}

@@ -7,10 +7,13 @@ public class DestructionModel : MarchingCubesModel
     [Header("Properties")]
 
     public int collisionRadius;
+    public GameObject particlesPrefab;
 
     public void ImpactReceived(Collision collision, int partId)
     {
         Destruct(collision.contacts[0].point - transform.position + (collision.contacts[0].normal * voxelModel.resolution * 0.5f), partId);
+
+        Instantiate(particlesPrefab, collision.contacts[0].point, Quaternion.identity).transform.localScale = Vector3.one * collisionRadius / 10;
     }
 
     private void Destruct(Vector3 collisionPoint, int destructionPartId)

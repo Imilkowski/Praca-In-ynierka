@@ -50,4 +50,8 @@ MonoBehaviour:
   showVoxelPoints: 0
   divisionFactor: {x: 0, y: 0, z: 0}
   partsPos: []
+  modelParts: []
+  partSize: {x: 0, y: 0, z: 0}
   collisionRadius: 1
+  particlesPrefab: {fileID: 3032323851746061234, guid: fdef3ab97df5e8a4e9d5b98a36da07a5,
+    type: 3}

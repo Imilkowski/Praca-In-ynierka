@@ -91,6 +91,7 @@ public class MarchingCubesModel : MonoBehaviour
             spawnedPart.AddComponent<MeshFilter>();
             spawnedPart.AddComponent<MeshCollider>();
             spawnedPart.AddComponent<MeshRenderer>().material = modelMaterial;
+            spawnedPart.layer = LayerMask.NameToLayer("DestructionVoxel");
 
             if (GetType() == typeof(DestructionModel))
             {

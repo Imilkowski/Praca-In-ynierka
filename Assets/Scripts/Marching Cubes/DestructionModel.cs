@@ -6,22 +6,21 @@ public class DestructionModel : MarchingCubesModel
 {
     [Header("Properties")]
 
-    public int collisionRadius;
     public GameObject particlesPrefab;
 
-    public void ImpactReceived(Collision collision, int partId)
+    public void ImpactReceived(Vector3 collisionPoint, int partId, int collisionRadius)
     {
-        Destruct(collision.contacts[0].point - transform.position + (collision.contacts[0].normal * voxelModel.resolution * 0.5f), partId);
+        Destruct(collisionPoint - transform.position, partId, collisionRadius);
 
-        Instantiate(particlesPrefab, collision.contacts[0].point, Quaternion.identity).transform.localScale = Vector3.one * collisionRadius / 10;
+        Instantiate(particlesPrefab, collisionPoint, Quaternion.identity).transform.localScale = Vector3.one * collisionRadius / 10;
     }
 
-    private void Destruct(Vector3 collisionPoint, int destructionPartId)
+    private void Destruct(Vector3 collisionPoint, int destructionPartId, int collisionRadius)
     {
         collisionPoint = collisionPoint / voxelModel.resolution;
         Vector3Int voxelCollisionPoint = new Vector3Int((int)Mathf.Round(collisionPoint.x), (int)Mathf.Round(collisionPoint.y), (int)Mathf.Round(collisionPoint.z));
 
-        List<Vector3Int> voxelOffsets = VoxelsInSphere();
+        List<Vector3Int> voxelOffsets = VoxelsInSphere(collisionRadius);
         foreach (Vector3Int voxelOffset in voxelOffsets)
         {
             try
@@ -89,7 +88,7 @@ public class DestructionModel : MarchingCubesModel
         return overlapX && overlapY && overlapZ;
     }
 
-    private List<Vector3Int> VoxelsInSphere() //TODO: save this info in projectiles
+    private List<Vector3Int> VoxelsInSphere(int collisionRadius) //TODO: save this info in projectiles
     {
         List<Vector3Int> voxelPoints = new List<Vector3Int>();
 

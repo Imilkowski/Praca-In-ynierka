@@ -32,7 +32,7 @@ MonoBehaviour:
   continuousFire: 0
   fireRate: 0.3
   reloadTime: 1.2
-  infiniteBullets: 0
+  infiniteBullets: 1
   magazineSize: 17
   bulletsPerFire: 1
   ammoCostPerFire: 1
@@ -127,14 +127,14 @@ MonoBehaviour:
   applyDifferentRecoilOnAiming: 1
   xRecoilAmountOnAiming: 40
   yRecoilAmountOnAiming: 2
-  damagePerBullet: 2
+  damagePerBullet: 3
   applyDamageReductionBasedOnDistance: 0
   minimumDistanceToApplyDamageReduction: 40.3
   damageReductionMultiplier: 1
   criticalDamageMultiplier: 1.5
   limitedMagazines: 0
   totalMagazines: 1
-  showBulletShells: 1
+  showBulletShells: 0
   bulletHoleImpact:
     defaultImpact: {fileID: 2462405574108921655, guid: e6d36bb0ebdf6cc4dacdeee8b6e8a0ce, type: 3}
     groundIMpact: {fileID: 2462405574108921655, guid: e6d36bb0ebdf6cc4dacdeee8b6e8a0ce, type: 3}

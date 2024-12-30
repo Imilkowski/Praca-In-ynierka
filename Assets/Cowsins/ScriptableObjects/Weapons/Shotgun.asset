@@ -32,9 +32,9 @@ MonoBehaviour:
   continuousFire: 0
   fireRate: 1.4
   reloadTime: 2.517
-  infiniteBullets: 0
+  infiniteBullets: 1
   magazineSize: 4
-  bulletsPerFire: 3
+  bulletsPerFire: 4
   ammoCostPerFire: 1
   bulletRange: 100
   timeBetweenShots: 0
@@ -181,14 +181,14 @@ MonoBehaviour:
   applyDifferentRecoilOnAiming: 0
   xRecoilAmountOnAiming: 0
   yRecoilAmountOnAiming: 0
-  damagePerBullet: 5
+  damagePerBullet: 7
   applyDamageReductionBasedOnDistance: 0
   minimumDistanceToApplyDamageReduction: 0
   damageReductionMultiplier: 0
   criticalDamageMultiplier: 1.5
   limitedMagazines: 0
   totalMagazines: 1
-  showBulletShells: 1
+  showBulletShells: 0
   bulletHoleImpact:
     defaultImpact: {fileID: 2462405574108921655, guid: e6d36bb0ebdf6cc4dacdeee8b6e8a0ce, type: 3}
     groundIMpact: {fileID: 2462405574108921655, guid: e6d36bb0ebdf6cc4dacdeee8b6e8a0ce, type: 3}
@@ -208,7 +208,7 @@ MonoBehaviour:
     reload: {fileID: 8300000, guid: e85428027ef8cf147be78b9e67abcc96, type: 3}
     emptyMag: {fileID: 8300000, guid: 5959d65463fbfe342a9219287eb7315f, type: 3}
   pitchVariationFiringSFX: 0.15
-  camShakeAmount: 0.21
+  camShakeAmount: 0.1
   applyFOVEffectOnShooting: 1
   FOVValueToSubstract: 8
   AimingFOVValueToSubstract: 5

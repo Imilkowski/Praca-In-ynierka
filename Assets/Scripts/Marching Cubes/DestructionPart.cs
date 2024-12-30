@@ -16,6 +16,9 @@ public class DestructionPart : MonoBehaviour, IDamageable
 
     void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+            return;
+
         transform.parent.GetComponent<DestructionModel>().ImpactReceived(collision.contacts[0].point, partId, 3);
     }
 }

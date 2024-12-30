@@ -69,7 +69,7 @@ public class RayVoxelizer : MonoBehaviour
         StartCoroutine(GenerateData());
     }
 
-    public IEnumerator GenerateData()
+    private IEnumerator GenerateData()
     {
         voxelData = new List<Voxel>();
 
@@ -93,7 +93,12 @@ public class RayVoxelizer : MonoBehaviour
                 }
             }
 
-            Debug.Log("Generating in progress " + Mathf.Round(((z + 1) / boundingBoxSize.z) * 100) + "%");
+            float progress = Mathf.Round(((z + 1) / boundingBoxSize.z) * 100);
+            Debug.Log("Generating in progress " + progress + "%");
+
+            if (VoxelizeOnStart.Instance != null)
+                VoxelizeOnStart.Instance.UpdateProgressBar(progress);
+
             yield return new WaitForEndOfFrame();
         }
 
@@ -102,6 +107,9 @@ public class RayVoxelizer : MonoBehaviour
         destinationVoxelData.resolution = resolution;
 
         Debug.Log("Voxel Data Generated: " + voxelData.Count + " voxels");
+
+        if (VoxelizeOnStart.Instance != null)
+            VoxelizeOnStart.Instance.VoxelizeNextModel();
     }
 
     private bool CheckPoint(Vector3 pointPos)

@@ -12,7 +12,9 @@ public class DestructionModel : MarchingCubesModel
     {
         Destruct(collisionPoint - transform.position, partId, collisionRadius);
 
-        Instantiate(particlesPrefab, collisionPoint, Quaternion.identity).transform.localScale = Vector3.one * collisionRadius / 10;
+        Transform particles = Instantiate(particlesPrefab, collisionPoint, Quaternion.identity).transform;
+        particles.localScale = Vector3.one * collisionRadius / 10;
+        particles.GetChild(0).GetComponent<ParticleSystemRenderer>().material = modelMaterial;
     }
 
     private void Destruct(Vector3 collisionPoint, int destructionPartId, int collisionRadius)

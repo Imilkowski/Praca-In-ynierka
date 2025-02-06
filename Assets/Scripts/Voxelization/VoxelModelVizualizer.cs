@@ -43,7 +43,7 @@ public class VoxelModelVizualizer : MonoBehaviour
         {
             Vector3 position = voxel.pos * voxelModel.resolution;
             Quaternion rotation = Quaternion.identity;
-            Vector3 scale = Vector3.one * voxelModel.resolution * 0.9f;
+            Vector3 scale = Vector3.one * voxelModel.resolution;
 
             Matrix4x4 mat = Matrix4x4.TRS(position + transform.position, rotation, scale);
 
